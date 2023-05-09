@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { createError } from "../error.js";
 import jwt from "jsonwebtoken";
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   try {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
     next(err);
   }
 };
-export const signin = async (req, res) => {
+export const signin = async (req, res, next) => {
   try {
     const user = await User.findOne({ name: req.body.name });
     if (!user) {
